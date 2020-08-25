@@ -9,15 +9,17 @@ public class Tank {
 
     private int x,y;//坦克大小
     private Dir dir = Dir.DOWN;//坦克方向
-    private static final int SPEED=5; //坦克的速度
+    private TankFrame tf; //tank画布（战场）的引用
+    private static final int SPEED=1; //坦克的速度
 
 
     private boolean moving = false;
 
-    public Tank(int x, int y, Dir dir) {
+    public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tf = tf;
     }
 
 
@@ -41,8 +43,11 @@ public class Tank {
     }
 
     //重画坦克
-    public void paint(Graphics graph) {
-        graph.fillRect(x,y,50,50);
+    public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.YELLOW);
+        g.fillRect(x, y, 50, 50);
+        g.setColor(c);
         move();
     }
 
@@ -65,4 +70,9 @@ public class Tank {
         }
     }
 
+    public void fire() {
+        //按下ctrl 键以后生成一个子弹，位置和坦克的位置一模一样
+//        this.tf.b = new Bullet(this.x, this.y, this.dir);
+        this.tf.bullets.add(new Bullet(this.x, this.y, this.dir,this.tf));
+    }
 }
