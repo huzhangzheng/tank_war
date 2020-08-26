@@ -10,13 +10,15 @@ import java.util.ArrayList;
 public class TankFrame extends Frame {
     Tank tank = new Tank(200, 200, Dir.DOWN, this);
     Bullet b = new Bullet(300,300,Dir.DOWN,this);
-    ArrayList<Bullet> bullets = new ArrayList<>();
+
+    ArrayList<Bullet> bullets = new ArrayList<>(); //bullets box
+    ArrayList<Tank> tanks =  new ArrayList<Tank>(); //enemies
 
     Image offScreenImage = null;
     static int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
     /**
-     * 这个就是坦克战场的描述，包括大小，名字，各种事件监听
+     * description of tank war field，包括大小，名字，各种事件监听
      * constructor
      *
      * @throws HeadlessException
@@ -55,9 +57,24 @@ public class TankFrame extends Frame {
         Color c = g.getColor();
         g.setColor(Color.WHITE);
         g.drawString("bullets count:" + bullets.size(), 10, 60);
+        g.drawString("enemies count:" + tanks.size(), 10, 80);
         g.setColor(c);
 
+        //paint my good tank
         tank.paint(g);
+
+        //paint enemies tanks
+        for (int i = 0; i < tanks.size(); i++) {
+            tanks.get(i).paint(g);
+        }
+
+        //check whether the bullet collide with tank and make it dead
+        for (int i = 0; i < bullets.size(); i++) {
+            for (int j = 0; j < tanks.size(); j++) {
+                bullets.get(i).colideWith(tanks.get(j));
+            }
+        }
+
         //这种iterator遍历方式会在Bullet类中删除元素的时候，产生 java.util.ConcurrentModificationException
 //        for (Bullet b: bullets) {b.paint(g);}
         for (int i = 0; i < bullets.size(); i++) {

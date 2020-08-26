@@ -1,3 +1,4 @@
+import com.kevin.ResourceMgr;
 import org.junit.Assert;
 import org.junit.Test;
 import javax.imageio.ImageIO;
@@ -12,12 +13,14 @@ public class ImageTest {
     @Test
     public void test() {
         try {
-            BufferedImage image = ImageIO.read(new File("F:\\projects\\tank_war\\src\\main\\images\\BadTank1.png"));
+            BufferedImage image = ImageIO.read(new File("F:\\projects\\tank_war\\src\\main\\resources\\images\\4.gif"));
             assertNotNull(image);
 
             BufferedImage image2 = ImageIO.read(ImageTest.class.getClassLoader().getResourceAsStream("images/bulletD.gif"));
-            URL resource = ImageTest.class.getClassLoader().getResource("images/bulletD.gif");
             assertNotNull(image2);
+
+            BufferedImage image3 = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletD.gif"));
+            assertNotNull(image3);
 
 
         } catch (IOException e) {

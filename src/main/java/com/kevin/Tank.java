@@ -7,19 +7,57 @@ import java.awt.*;
  */
 public class Tank {
 
-    private int x,y;//坦克大小
-    private Dir dir = Dir.DOWN;//坦克方向
-    private TankFrame tf; //tank画布（战场）的引用
-    private static final int SPEED=1; //坦克的速度
+
+    private int x,y;//coordinate of tank
+    private Dir dir = Dir.DOWN;//diretion of tan
+    private TankFrame tf; //tank canvas（war field）
+    private static final int SPEED=1; //speed of tank
 
 
-    private boolean moving = false;
+    public static int WIDTH = ResourceMgr.tankD.getWidth(); //width of tank
+    public static int HEIGHT = ResourceMgr.tankD.getHeight(); // height of tank
+    public boolean moving = false;
+    public boolean living = true;
+
+
+
+
 
     public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf = tf;
+    }
+
+    public static int getWIDTH() {
+        return WIDTH;
+    }
+
+    public static int getHEIGHT() {
+        return HEIGHT;
+    }
+    public static void setWIDTH(int WIDTH) {
+        Tank.WIDTH = WIDTH;
+    }
+
+    public static void setHEIGHT(int HEIGHT) {
+        Tank.HEIGHT = HEIGHT;
+    }
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
 
@@ -44,10 +82,30 @@ public class Tank {
 
     //重画坦克
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.YELLOW);
-        g.fillRect(x, y, 50, 50);
-        g.setColor(c);
+//        Color c = g.getColor();
+//        g.setColor(Color.YELLOW);
+//        g.fillRect(x, y, 50, 50);
+//        g.setColor(c);
+
+        //whether the tank is alive
+        if (!this.living)  tf.tanks.remove(this);
+
+        // repaint the tank
+        switch (this.dir) {
+            case LEFT:
+                g.drawImage(ResourceMgr.tankL, x, y, null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.tankU, x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.tankR, x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.tankD, x, y, null);
+                break;
+        }
+        //start to move
         move();
     }
 
@@ -73,6 +131,12 @@ public class Tank {
     public void fire() {
         //按下ctrl 键以后生成一个子弹，位置和坦克的位置一模一样
 //        this.tf.b = new Bullet(this.x, this.y, this.dir);
-        this.tf.bullets.add(new Bullet(this.x, this.y, this.dir,this.tf));
+        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
+        int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
+        this.tf.bullets.add(new Bullet(bX, bY, this.dir,this.tf));
+    }
+
+    public void die() {
+        this.living= false;
     }
 }
