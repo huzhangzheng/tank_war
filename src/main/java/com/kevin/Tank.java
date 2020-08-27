@@ -1,6 +1,7 @@
 package com.kevin;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * 设置坦克方向-》然后重画坦克
@@ -16,20 +17,28 @@ public class Tank {
 
     public static int WIDTH = ResourceMgr.tankD.getWidth(); //width of tank
     public static int HEIGHT = ResourceMgr.tankD.getHeight(); // height of tank
-    public boolean moving = false;
+    public boolean moving = true;
     public boolean living = true;
+    public Group group = Group.BAD;
+    private Random random = new Random();
 
 
 
-
-
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    public Tank(int x, int y, Dir dir,Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf = tf;
+        this.group = group;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
     public static int getWIDTH() {
         return WIDTH;
     }
@@ -59,7 +68,6 @@ public class Tank {
     public void setY(int y) {
         this.y = y;
     }
-
 
     //get direction
     public Dir getDir() {
@@ -126,6 +134,9 @@ public class Tank {
                 y += SPEED;
                 break;
         }
+
+        //after random moves , the tank will fire
+        if(random.nextInt(10)>8 && this.group==Group.BAD) this.fire();
     }
 
     public void fire() {
@@ -133,7 +144,7 @@ public class Tank {
 //        this.tf.b = new Bullet(this.x, this.y, this.dir);
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
-        this.tf.bullets.add(new Bullet(bX, bY, this.dir,this.tf));
+        this.tf.bullets.add(new Bullet(bX, bY, this.dir,this.group,this.tf));
     }
 
     public void die() {

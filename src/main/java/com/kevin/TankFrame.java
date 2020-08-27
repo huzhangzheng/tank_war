@@ -8,11 +8,12 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class TankFrame extends Frame {
-    Tank tank = new Tank(200, 200, Dir.DOWN, this);
-    Bullet b = new Bullet(300,300,Dir.DOWN,this);
+    Tank tank = new Tank(200, 300, Dir.DOWN,Group.GOOD,this);
+    Bullet b = new Bullet(300,300,Dir.DOWN,Group.BAD,this);
 
     ArrayList<Bullet> bullets = new ArrayList<>(); //bullets box
     ArrayList<Tank> tanks =  new ArrayList<Tank>(); //enemies
+    Explode explode = new Explode(100,100,this);
 
     Image offScreenImage = null;
     static int GAME_WIDTH = 800, GAME_HEIGHT = 600;
@@ -68,7 +69,7 @@ public class TankFrame extends Frame {
             tanks.get(i).paint(g);
         }
 
-        //check whether the bullet collide with tank and make it dead
+        //check whether the bullet collide with enemies tank and make it dead
         for (int i = 0; i < bullets.size(); i++) {
             for (int j = 0; j < tanks.size(); j++) {
                 bullets.get(i).colideWith(tanks.get(j));
@@ -80,6 +81,9 @@ public class TankFrame extends Frame {
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
         }
+
+        //paint a explosion for fun
+        explode.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {

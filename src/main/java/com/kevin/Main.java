@@ -6,7 +6,7 @@ public class Main {
         TankFrame tf = new TankFrame();
         //initiate 5 enemies, which  will be paint at TankFram class
         for (int i = 0; i < 5; i++) {
-            tf.tanks.add(new Tank(50 + i * 40, 200, Dir.DOWN, tf));
+            tf.tanks.add(new Tank(50 + i * 40, 200, Dir.DOWN, Group.BAD,tf));
         }
 
         while(true){

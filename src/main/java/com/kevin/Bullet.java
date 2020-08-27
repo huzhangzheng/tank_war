@@ -10,13 +10,25 @@ public class Bullet {
     private Dir dir;
     private boolean living =true;
     TankFrame tf = null;
+    private Group group = Group.BAD;
 
-    public Bullet(int x, int y, Dir dir,TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf = tf;
+        this.group = group;
     }
+
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
 
     public void paint(Graphics g) {
         if(!this.living) {
@@ -67,6 +79,9 @@ public class Bullet {
     }
 
     public void colideWith(Tank tank) {
+        //bullet won't kill it if the tank is our own group
+        if(this.group == tank.group) return;
+
         Rectangle rectangle1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
         Rectangle rectangle2 = new Rectangle(tank.getX(), tank.getY(), tank.WIDTH, tank.HEIGHT);
         if (rectangle1.intersects(rectangle2)) {
