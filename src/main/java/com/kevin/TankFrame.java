@@ -12,11 +12,11 @@ public class TankFrame extends Frame {
     Bullet b = new Bullet(300,300,Dir.DOWN,Group.BAD,this);
 
     ArrayList<Bullet> bullets = new ArrayList<>(); //bullets box
-    ArrayList<Tank> tanks =  new ArrayList<Tank>(); //enemies
-    Explode explode = new Explode(100,100,this);
+    ArrayList<Tank> tanks =  new ArrayList<>(); //enemies
+    ArrayList<Explode> explodes =  new ArrayList<>(); //explodes
 
     Image offScreenImage = null;
-    static int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+    static int GAME_WIDTH = 1000, GAME_HEIGHT = 700;
 
     /**
      * description of tank war field，包括大小，名字，各种事件监听
@@ -59,6 +59,7 @@ public class TankFrame extends Frame {
         g.setColor(Color.WHITE);
         g.drawString("bullets count:" + bullets.size(), 10, 60);
         g.drawString("enemies count:" + tanks.size(), 10, 80);
+        g.drawString("explosion count:" + tanks.size(), 10, 100);
         g.setColor(c);
 
         //paint my good tank
@@ -83,7 +84,9 @@ public class TankFrame extends Frame {
         }
 
         //paint a explosion for fun
-        explode.paint(g);
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
+        }
     }
 
     class MyKeyListener extends KeyAdapter {
