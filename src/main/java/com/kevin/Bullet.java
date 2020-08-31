@@ -11,6 +11,7 @@ public class Bullet {
     private boolean living =true;
     TankFrame tf = null;
     private Group group = Group.BAD;
+    private Rectangle rec = new Rectangle();
 
     public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
@@ -18,6 +19,11 @@ public class Bullet {
         this.dir = dir;
         this.tf = tf;
         this.group = group;
+
+        rec.x = this.x;
+        rec.y = this.y;
+        rec.width = WIDTH;
+        rec.height = HEIGHT;
     }
 
 
@@ -56,6 +62,11 @@ public class Bullet {
 
         //start to move
         move();
+
+        //reassign bullet coordinate to the retangle
+        rec.x = this.x;
+        rec.y = this.y;
+
     }
 
     private void move() {
@@ -82,9 +93,8 @@ public class Bullet {
         //bullet won't kill it if the tank is our own group
         if(this.group == tank.group) return;
 
-        Rectangle rectangle1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-        Rectangle rectangle2 = new Rectangle(tank.getX(), tank.getY(), tank.WIDTH, tank.HEIGHT);
-        if (rectangle1.intersects(rectangle2)) {
+
+        if (rec.intersects(tank.rec)) {
             this.die();
             tank.die();
             int ex = tank.getX()+ tank.WIDTH/2 - this.WIDTH/2;
