@@ -1,5 +1,9 @@
 package com.kevin;
 
+import com.kevin.fireStragety.BaseStrategy;
+import com.kevin.fireStragety.DefaultStragety;
+import com.kevin.fireStragety.FourDirStragety;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -7,11 +11,9 @@ import java.util.Random;
  * 设置坦克方向-》然后重画坦克
  */
 public class Tank {
-
-
-    private int x, y;//coordinate of tank
-    private Dir dir = Dir.DOWN;//diretion of tan
-    private TankFrame tf; //tank canvas（war field）
+    public int x, y;//coordinate of tank
+    public Dir dir = Dir.DOWN;//diretion of tan
+    public TankFrame tf; //tank canvas（war field）
     private static final int SPEED = 2; //speed of tank
 
 
@@ -22,6 +24,7 @@ public class Tank {
     public Group group = Group.BAD;
     private Random random = new Random();
     public Rectangle rec = new Rectangle();
+    private BaseStrategy fireStrategy;
 
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
@@ -35,30 +38,10 @@ public class Tank {
         rec.y = y;
         rec.width = WIDTH;
         rec.height = HEIGHT;
-    }
 
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public static int getWIDTH() {
-        return WIDTH;
-    }
-
-    public static int getHEIGHT() {
-        return HEIGHT;
-    }
-
-    public static void setWIDTH(int WIDTH) {
-        Tank.WIDTH = WIDTH;
-    }
-
-    public static void setHEIGHT(int HEIGHT) {
-        Tank.HEIGHT = HEIGHT;
+        fireStrategy = this.group == Group.BAD?
+                        DefaultStragety.INSTANCE.getInstance():
+                        FourDirStragety.INSTANCE.getInstance();
     }
 
     public int getX() {
@@ -164,8 +147,6 @@ public class Tank {
         if (y < 28) y = 28;
         if (TankFrame.GAME_WIDTH - x - Tank.WIDTH < 2) x = TankFrame.GAME_WIDTH - (Tank.WIDTH + 2);
         if (TankFrame.GAME_HEIGHT - Tank.HEIGHT - y < 2) y = TankFrame.GAME_HEIGHT - (Tank.HEIGHT + 2);
-//        if (this.x > TankFrame.GAME_WIDTH- Tank.WIDTH -2) x = TankFrame.GAME_WIDTH - Tank.WIDTH -2;
-//        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT -2 ) y = TankFrame.GAME_HEIGHT -Tank.HEIGHT -2;
     }
 
     private void randomDir() {
@@ -173,19 +154,7 @@ public class Tank {
     }
 
     public void fire() {
-        //ctrl  generate bullet
-//        this.tf.b = new Bullet(this.x, this.y, this.dir);
-        int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-        int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-
-        //the bullet was put into clip when fire the tank, to improve
-//        this.tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
-        new Bullet(bX, bY, this.dir, this.group, this.tf);
-
-        //audio voice for tank
-        if (this.group == Group.GOOD) {
-            new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
-        }
+        fireStrategy.fire(this);
     }
 
     public void die() {

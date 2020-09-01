@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class TankFrame extends Frame {
-    Tank tank = new Tank(200, 300, Dir.DOWN,Group.GOOD,this);
+    Tank tank = new Tank(200, 300, Dir.DOWN, Group.GOOD,this);
 
     ArrayList<Bullet> bullets = new ArrayList<>(); //bullets box
     ArrayList<Tank> tanks =  new ArrayList<>(); //enemies
