@@ -12,11 +12,11 @@ public class Tank {
     private int x, y;//coordinate of tank
     private Dir dir = Dir.DOWN;//diretion of tan
     private TankFrame tf; //tank canvas（war field）
-    private static final int SPEED = 3; //speed of tank
+    private static final int SPEED = 2; //speed of tank
 
 
-    public static int WIDTH = ResourceMgr.goodTankD.getWidth(); //width of tank
-    public static int HEIGHT = ResourceMgr.goodTankD.getHeight(); // height of tank
+    public static int WIDTH = ResourceMgr.INSTANCE.getGoodTankD().getWidth(); //width of tank
+    public static int HEIGHT = ResourceMgr.INSTANCE.getGoodTankD().getHeight(); // height of tank
     public boolean moving = true;
     public boolean living = true;
     public Group group = Group.BAD;
@@ -110,16 +110,16 @@ public class Tank {
         // repaint the tank
         switch (this.dir) {
             case LEFT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.INSTANCE.getGoodTankL() : ResourceMgr.INSTANCE.getBadTankL(), x, y, null);
                 break;
             case UP:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.INSTANCE.getGoodTankU() : ResourceMgr.INSTANCE.getBadTankU(), x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.INSTANCE.getGoodTankR() : ResourceMgr.INSTANCE.getBadTankR(), x, y, null);
                 break;
             case DOWN:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.INSTANCE.getGoodTankD() : ResourceMgr.INSTANCE.getBadTankD(), x, y, null);
 
                 break;
         }
@@ -177,7 +177,10 @@ public class Tank {
 //        this.tf.b = new Bullet(this.x, this.y, this.dir);
         int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
         int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
-        this.tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
+
+        //the bullet was put into clip when fire the tank, to improve
+//        this.tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
+        new Bullet(bX, bY, this.dir, this.group, this.tf);
 
         //audio voice for tank
         if (this.group == Group.GOOD) {

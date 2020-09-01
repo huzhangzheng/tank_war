@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class TankFrame extends Frame {
     Tank tank = new Tank(200, 300, Dir.DOWN,Group.GOOD,this);
-    Bullet b = new Bullet(300,300,Dir.DOWN,Group.BAD,this);
 
     ArrayList<Bullet> bullets = new ArrayList<>(); //bullets box
     ArrayList<Tank> tanks =  new ArrayList<>(); //enemies

@@ -4,8 +4,8 @@ import java.awt.*;
 
 public class Bullet {
     private final static int SPEED=5; //the speed of bullet
-    public final static int WIDTH= ResourceMgr.bulletD.getWidth(); // width of bullet
-    public final static int HEIGHT= ResourceMgr.bulletD.getHeight();//height of the bullet
+    public final static int WIDTH= ResourceMgr.INSTANCE.getBulletU().getWidth(); // width of bullet
+    public final static int HEIGHT= ResourceMgr.INSTANCE.getBulletU().getHeight();//height of the bullet
     private int x,y; // the coordinate of the bullet
     private Dir dir;
     private boolean living =true;
@@ -24,6 +24,9 @@ public class Bullet {
         rec.y = this.y;
         rec.width = WIDTH;
         rec.height = HEIGHT;
+
+        //after bullet was created , add this bullet into  the  clip
+        tf.bullets.add(this);
     }
 
 
@@ -47,16 +50,16 @@ public class Bullet {
         //repaint the bullet picture
         switch (this.dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.bulletL, x, y, null);
+                g.drawImage(ResourceMgr.INSTANCE.getBulletL(), x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.bulletU, x, y, null);
+                g.drawImage(ResourceMgr.INSTANCE.getBulletU(), x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.bulletR, x, y, null);
+                g.drawImage(ResourceMgr.INSTANCE.getBulletR(), x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.bulletD, x, y, null);
+                g.drawImage(ResourceMgr.INSTANCE.getBulletD(), x, y, null);
                 break;
         }
 

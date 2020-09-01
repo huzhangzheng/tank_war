@@ -8,14 +8,18 @@ import java.util.ArrayList;
 /**
  * class for managing pictures
  */
-public class ResourceMgr {
-    public static BufferedImage goodTankL, goodTankU, goodTankR, goodTankD; // good tank images
-    public static BufferedImage badTankL, badTankU, badTankR, badTankD; //bad tank images
+public enum ResourceMgr {
+    INSTANCE;
 
-    public static BufferedImage bulletL, bulletU, bulletR, bulletD; // bullet images
-    public static  BufferedImage[] explodes = new BufferedImage[16];
 
-    static {
+    private  BufferedImage goodTankL, goodTankU, goodTankR, goodTankD; // good tank images
+    private  BufferedImage badTankL, badTankU, badTankR, badTankD; //bad tank images
+
+    private  BufferedImage bulletL, bulletU, bulletR, bulletD; // bullet images
+    private   BufferedImage[] explodes = new BufferedImage[16];
+
+    //constructor
+    ResourceMgr (){
         System.out.println("开始初始化");
         try {
             //get pictures for tank_left tank_right tank_up tank_down
@@ -42,5 +46,58 @@ public class ResourceMgr {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public  BufferedImage getGoodTankL() {
+        return goodTankL;
+    }
+
+    public  BufferedImage getGoodTankU() {
+        return goodTankU;
+    }
+
+    public  BufferedImage getGoodTankR() {
+        return goodTankR;
+    }
+
+    public  BufferedImage getGoodTankD() {
+        return goodTankD;
+    }
+
+    public  BufferedImage getBadTankL() {
+        return badTankL;
+    }
+
+    public  BufferedImage getBadTankU() {
+        return badTankU;
+    }
+
+    public  BufferedImage getBadTankR() {
+        return badTankR;
+    }
+
+    public  BufferedImage getBadTankD() {
+        return badTankD;
+    }
+
+    public  BufferedImage getBulletL() {
+        return bulletL;
+    }
+
+    public  BufferedImage getBulletU() {
+        return bulletU;
+    }
+
+    public  BufferedImage getBulletR() {
+        return bulletR;
+    }
+
+    public  BufferedImage getBulletD() {
+        return bulletD;
+    }
+
+    public  BufferedImage[] getExplodes() {
+        return explodes;
     }
 }
