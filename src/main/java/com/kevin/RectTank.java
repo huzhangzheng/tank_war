@@ -6,9 +6,9 @@ import java.awt.*;
 import java.util.Random;
 
 /**
- * 设置坦克方向-》然后重画坦克
+ * 方形坦克
  */
-public class Tank extends BaseTank {
+public class RectTank extends BaseTank {
 
 
     private int x, y;//coordinate of tank
@@ -25,7 +25,7 @@ public class Tank extends BaseTank {
     private Random random = new Random();
 
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public RectTank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -55,11 +55,11 @@ public class Tank extends BaseTank {
     }
 
     public static void setWIDTH(int WIDTH) {
-        Tank.WIDTH = WIDTH;
+        RectTank.WIDTH = WIDTH;
     }
 
     public static void setHEIGHT(int HEIGHT) {
-        Tank.HEIGHT = HEIGHT;
+        RectTank.HEIGHT = HEIGHT;
     }
 
     public int getX() {
@@ -92,28 +92,15 @@ public class Tank extends BaseTank {
         this.moving = moving;
     }
 
-    //重画坦克
+    //方形坦克
     public void paint(Graphics g) {
         //whether the tank is alive
         if (!this.living) tf.tanks.remove(this);
 
-        // repaint the tank
-        switch (this.dir) {
-            case LEFT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.INSTANCE.getGoodTankL() : ResourceMgr.INSTANCE.getBadTankL(), x, y, null);
-                break;
-            case UP:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.INSTANCE.getGoodTankU() : ResourceMgr.INSTANCE.getBadTankU(), x, y, null);
-                break;
-            case RIGHT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.INSTANCE.getGoodTankR() : ResourceMgr.INSTANCE.getBadTankR(), x, y, null);
-                break;
-            case DOWN:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.INSTANCE.getGoodTankD() : ResourceMgr.INSTANCE.getBadTankD(), x, y, null);
-
-                break;
-        }
-        //start to move
+        Color c = g.getColor();
+        g.setColor(group == Group.GOOD ? Color.RED : Color.BLUE);
+        g.fillRect(x, y, 40, 40);
+        g.setColor(c);
         move();
     }
 
@@ -152,8 +139,8 @@ public class Tank extends BaseTank {
     private void boundsCheck() {
         if (x < 2) x = 2;
         if (y < 28) y = 28;
-        if (TankFrame.GAME_WIDTH - x - Tank.WIDTH < 2) x = TankFrame.GAME_WIDTH - (Tank.WIDTH + 2);
-        if (TankFrame.GAME_HEIGHT - Tank.HEIGHT - y < 2) y = TankFrame.GAME_HEIGHT - (Tank.HEIGHT + 2);
+        if (TankFrame.GAME_WIDTH - x - RectTank.WIDTH < 2) x = TankFrame.GAME_WIDTH - (RectTank.WIDTH + 2);
+        if (TankFrame.GAME_HEIGHT - RectTank.HEIGHT - y < 2) y = TankFrame.GAME_HEIGHT - (RectTank.HEIGHT + 2);
 //        if (this.x > TankFrame.GAME_WIDTH- Tank.WIDTH -2) x = TankFrame.GAME_WIDTH - Tank.WIDTH -2;
 //        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT -2 ) y = TankFrame.GAME_HEIGHT -Tank.HEIGHT -2;
     }
@@ -165,8 +152,8 @@ public class Tank extends BaseTank {
     public void fire() {
         //ctrl  generate bullet
 //        this.tf.b = new Bullet(this.x, this.y, this.dir);
-        int bX = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;
-        int bY = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
+        int bX = this.x + RectTank.WIDTH / 2 - Bullet.WIDTH / 2;
+        int bY = this.y + RectTank.HEIGHT / 2 - Bullet.HEIGHT / 2;
 
         //the bullet was put into clip when fire the tank, to improve
 //        this.tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));

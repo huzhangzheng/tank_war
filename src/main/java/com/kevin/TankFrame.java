@@ -1,5 +1,7 @@
 package com.kevin;
 
+import com.kevin.abstractFactory.*;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -10,12 +12,15 @@ import java.util.ArrayList;
 public class TankFrame extends Frame {
     Tank tank = new Tank(200, 300, Dir.DOWN,Group.GOOD,this);
 
-    ArrayList<Bullet> bullets = new ArrayList<>(); //bullets box
-    ArrayList<Tank> tanks =  new ArrayList<>(); //enemies
-    ArrayList<Explode> explodes =  new ArrayList<>(); //explodes
+    ArrayList<BaseBullet> bullets = new ArrayList<>(); //bullets box
+    ArrayList<BaseTank> tanks =  new ArrayList<>(); //enemies
+    ArrayList<BaseExplode> explodes =  new ArrayList<>(); //explodes
 
     Image offScreenImage = null;
     static int GAME_WIDTH = 1000, GAME_HEIGHT = 700;
+
+    BaseFactory gf = new CustomOneFactory();
+//    BaseFactory gf = new DefaultFactory();
 
     /**
      * description of tank war field，包括大小，名字，各种事件监听
@@ -72,7 +77,7 @@ public class TankFrame extends Frame {
         //check whether the bullet collide with enemies tank and make it dead
         for (int i = 0; i < bullets.size(); i++) {
             for (int j = 0; j < tanks.size(); j++) {
-                bullets.get(i).colideWith(tanks.get(j));
+                bullets.get(i).collideWith(tanks.get(j));
             }
         }
 

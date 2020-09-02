@@ -5,7 +5,7 @@ import com.kevin.abstractFactory.BaseTank;
 
 import java.awt.*;
 
-public class Bullet extends BaseBullet {
+public class RectBullet extends BaseBullet {
     private final static int SPEED=5; //the speed of bullet
     public final static int WIDTH= ResourceMgr.INSTANCE.getBulletU().getWidth(); // width of bullet
     public final static int HEIGHT= ResourceMgr.INSTANCE.getBulletU().getHeight();//height of the bullet
@@ -16,7 +16,7 @@ public class Bullet extends BaseBullet {
     private Group group = Group.BAD;
     private Rectangle rec = new Rectangle();
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public RectBullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -43,30 +43,15 @@ public class Bullet extends BaseBullet {
 
 
     public void paint(Graphics g) {
-        if(!this.living) {
+        if(!living) {
             tf.bullets.remove(this);
         }
-//        Color originColor = g.getColor();
-//        g.setColor(Color.RED);
-//        g.fillOval(x,y,WIDTH,HEIGHT);
-//        g.setColor(originColor);
-        //repaint the bullet picture
-        switch (this.dir) {
-            case LEFT:
-                g.drawImage(ResourceMgr.INSTANCE.getBulletL(), x, y, null);
-                break;
-            case UP:
-                g.drawImage(ResourceMgr.INSTANCE.getBulletU(), x, y, null);
-                break;
-            case RIGHT:
-                g.drawImage(ResourceMgr.INSTANCE.getBulletR(), x, y, null);
-                break;
-            case DOWN:
-                g.drawImage(ResourceMgr.INSTANCE.getBulletD(), x, y, null);
-                break;
-        }
 
-        //start to move
+        Color c = g.getColor();
+        g.setColor(Color.YELLOW);
+        g.fillRect(x, y, 20, 20);
+        g.setColor(c);
+
         move();
 
         //reassign bullet coordinate to the retangle
