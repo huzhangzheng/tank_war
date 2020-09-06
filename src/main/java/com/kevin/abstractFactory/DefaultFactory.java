@@ -14,7 +14,7 @@ public class DefaultFactory extends BaseFactory {
     }
 
     @Override
-    public RectExplode createExplode(int x, int y, TankFrame tf) {
-        return new RectExplode(x,y,tf);
+    public Explode createExplode(int x, int y, TankFrame tf) {
+        return new Explode(x,y,tf);
     }
 }

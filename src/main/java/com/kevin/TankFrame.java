@@ -19,8 +19,8 @@ public class TankFrame extends Frame {
     Image offScreenImage = null;
     static int GAME_WIDTH = 1000, GAME_HEIGHT = 700;
 
-    BaseFactory gf = new CustomOneFactory();
-//    BaseFactory gf = new DefaultFactory();
+//    BaseFactory gf = new CustomOneFactory();
+    BaseFactory gf = new DefaultFactory();
 
     /**
      * description of tank war field，包括大小，名字，各种事件监听
