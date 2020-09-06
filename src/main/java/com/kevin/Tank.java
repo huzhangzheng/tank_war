@@ -13,7 +13,7 @@ import java.util.Random;
 public class Tank {
     public int x, y;//coordinate of tank
     public Dir dir = Dir.DOWN;//diretion of tan
-    public TankFrame tf; //tank canvas（war field）
+    public GameModel gm; //tank canvas（war field）
     private static final int SPEED = 2; //speed of tank
 
 
@@ -27,11 +27,11 @@ public class Tank {
     private BaseStrategy fireStrategy;
 
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf = tf;
+        this.gm = gm;
         this.group = group;
 
         rec.x = x;
@@ -88,7 +88,7 @@ public class Tank {
 //        g.setColor(c);
 
         //whether the tank is alive
-        if (!this.living) tf.tanks.remove(this);
+        if (!this.living) gm.tanks.remove(this);
 
         // repaint the tank
         switch (this.dir) {

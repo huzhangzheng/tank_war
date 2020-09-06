@@ -9,15 +9,15 @@ public class Bullet {
     private int x,y; // the coordinate of the bullet
     private Dir dir;
     private boolean living =true;
-    TankFrame tf = null;
+    GameModel gm = null;
     private Group group = Group.BAD;
     private Rectangle rec = new Rectangle();
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf = tf;
+        this.gm = gm;
         this.group = group;
 
         rec.x = this.x;
@@ -26,7 +26,7 @@ public class Bullet {
         rec.height = HEIGHT;
 
         //after bullet was created , add this bullet into  the  clip
-        tf.bullets.add(this);
+        gm.bullets.add(this);
     }
 
 
@@ -41,7 +41,7 @@ public class Bullet {
 
     public void paint(Graphics g) {
         if(!this.living) {
-            tf.bullets.remove(this);
+            gm.bullets.remove(this);
         }
 //        Color originColor = g.getColor();
 //        g.setColor(Color.RED);
@@ -89,7 +89,7 @@ public class Bullet {
         }
 
         //evaluate whether the bullets is alive or not.
-        if(x<0 || y<0|| x>this.tf.GAME_WIDTH|| y>this.tf.GAME_HEIGHT) this.living =false;
+        if(x<0 || y<0|| x>TankFrame.GAME_WIDTH|| y>TankFrame.GAME_HEIGHT) this.living =false;
     }
 
     public void colideWith(Tank tank) {
@@ -102,7 +102,7 @@ public class Bullet {
             tank.die();
             int ex = tank.getX()+ tank.WIDTH/2 - this.WIDTH/2;
             int ey = tank.getY()+ tank.HEIGHT/2 - this.HEIGHT/2;
-            tf.explodes.add(new Explode(ex,ey,tf));
+            gm.explodes.add(new Explode(ex,ey,gm));
         }
     }
 

@@ -8,19 +8,19 @@ public class Explode {
 
     private int x, y;
     private boolean living = true;
-    TankFrame tf = null;
+    GameModel gm = null;
     private int step = 0;
 
-    public Explode(int x, int y, TankFrame tf) {
+    public Explode(int x, int y, GameModel tf) {
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.gm = tf;
     }
 
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.INSTANCE.getExplodes()[step++],x,y,null);
         if (step >= ResourceMgr.INSTANCE.getExplodes().length) {
-            this.tf.explodes.remove(this);
+            this.gm.explodes.remove(this);
         }
         new Thread(()->new Audio("audio/explode.wav").play()).start();
     }

@@ -12,7 +12,7 @@ public enum  FourDirStragety  {
             int bY = tank.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;
 
             for ( Dir dir : Dir.values()){
-                new Bullet(bX, bY, dir, tank.group, tank.tf);
+                new Bullet(bX, bY, dir, tank.group, tank.gm);
             }
             //audio voice for tank
             if (tank.group == Group.GOOD) {

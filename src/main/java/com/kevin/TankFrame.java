@@ -8,11 +8,9 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class TankFrame extends Frame {
-    Tank tank = new Tank(200, 300, Dir.DOWN, Group.GOOD,this);
+    private GameModel gm = new GameModel();
 
-    ArrayList<Bullet> bullets = new ArrayList<>(); //bullets box
-    ArrayList<Tank> tanks =  new ArrayList<>(); //enemies
-    ArrayList<Explode> explodes =  new ArrayList<>(); //explodes
+
 
     Image offScreenImage = null;
     static int GAME_WIDTH = 1000, GAME_HEIGHT = 700;
@@ -54,38 +52,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("bullets count:" + bullets.size(), 10, 60);
-        g.drawString("enemies count:" + tanks.size(), 10, 80);
-        g.drawString("explosion count:" + tanks.size(), 10, 100);
-        g.setColor(c);
-
-        //paint my good tank
-        tank.paint(g);
-
-        //paint enemies tanks
-        for (int i = 0; i < tanks.size(); i++) {
-            tanks.get(i).paint(g);
-        }
-
-        //check whether the bullet collide with enemies tank and make it dead
-        for (int i = 0; i < bullets.size(); i++) {
-            for (int j = 0; j < tanks.size(); j++) {
-                bullets.get(i).colideWith(tanks.get(j));
-            }
-        }
-
-        //这种iterator遍历方式会在Bullet类中删除元素的时候，产生 java.util.ConcurrentModificationException
-//        for (Bullet b: bullets) {b.paint(g);}
-        for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).paint(g);
-        }
-
-        //paint a explosion for fun
-        for (int i = 0; i < explodes.size(); i++) {
-            explodes.get(i).paint(g);
-        }
+        gm.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -124,14 +91,14 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir() {
             if (!bL && !bR && !bU && !bD) {
-                tank.setMoving(false);
+                gm.getMainTank().setMoving(false);
             } else {
-                tank.setMoving(true);
+                gm.getMainTank().setMoving(true);
 
-                if (bL) tank.setDir(Dir.LEFT);
-                if (bR) tank.setDir(Dir.RIGHT);
-                if (bU) tank.setDir(Dir.UP);
-                if (bD) tank.setDir(Dir.DOWN);
+                if (bL) gm.getMainTank().setDir(Dir.LEFT);
+                if (bR) gm.getMainTank().setDir(Dir.RIGHT);
+                if (bU) gm.getMainTank().setDir(Dir.UP);
+                if (bD) gm.getMainTank().setDir(Dir.DOWN);
             }
 
 
@@ -155,7 +122,7 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    tank.fire();
+                    gm.getMainTank().fire();
                     break;
                 default:
                     break;
