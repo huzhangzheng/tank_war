@@ -2,7 +2,7 @@ package com.kevin;
 
 import java.awt.*;
 
-public class Explode {
+public class Explode extends GameObject {
     public static int WIDTH = ResourceMgr.INSTANCE.getExplodes()[0].getWidth();
     public static int HEIGHT = ResourceMgr.INSTANCE.getExplodes()[0].getHeight();
 
@@ -20,7 +20,7 @@ public class Explode {
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.INSTANCE.getExplodes()[step++],x,y,null);
         if (step >= ResourceMgr.INSTANCE.getExplodes().length) {
-            this.gm.explodes.remove(this);
+            this.gm.remove(this);
         }
         new Thread(()->new Audio("audio/explode.wav").play()).start();
     }

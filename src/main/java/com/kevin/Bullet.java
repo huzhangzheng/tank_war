@@ -2,7 +2,7 @@ package com.kevin;
 
 import java.awt.*;
 
-public class Bullet {
+public class Bullet extends GameObject {
     private final static int SPEED=5; //the speed of bullet
     public final static int WIDTH= ResourceMgr.INSTANCE.getBulletU().getWidth(); // width of bullet
     public final static int HEIGHT= ResourceMgr.INSTANCE.getBulletU().getHeight();//height of the bullet
@@ -26,7 +26,7 @@ public class Bullet {
         rec.height = HEIGHT;
 
         //after bullet was created , add this bullet into  the  clip
-        gm.bullets.add(this);
+        gm.add(this);
     }
 
 
@@ -41,7 +41,7 @@ public class Bullet {
 
     public void paint(Graphics g) {
         if(!this.living) {
-            gm.bullets.remove(this);
+            gm.remove(this);
         }
 //        Color originColor = g.getColor();
 //        g.setColor(Color.RED);
@@ -102,7 +102,7 @@ public class Bullet {
             tank.die();
             int ex = tank.getX()+ tank.WIDTH/2 - this.WIDTH/2;
             int ey = tank.getY()+ tank.HEIGHT/2 - this.HEIGHT/2;
-            gm.explodes.add(new Explode(ex,ey,gm));
+            gm.add(new Explode(ex,ey,gm));
         }
     }
 

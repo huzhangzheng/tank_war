@@ -10,7 +10,7 @@ import java.util.Random;
 /**
  * 设置坦克方向-》然后重画坦克
  */
-public class Tank {
+public class Tank extends GameObject{
     public int x, y;//coordinate of tank
     public Dir dir = Dir.DOWN;//diretion of tan
     public GameModel gm; //tank canvas（war field）
@@ -88,7 +88,7 @@ public class Tank {
 //        g.setColor(c);
 
         //whether the tank is alive
-        if (!this.living) gm.tanks.remove(this);
+        if (!this.living) gm.remove(this);
 
         // repaint the tank
         switch (this.dir) {
