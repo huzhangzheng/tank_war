@@ -1,18 +1,29 @@
 package com.kevin;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GameModel {
-    Tank tank = new Tank(200, 300, Dir.DOWN, Group.GOOD,this);
-//    ArrayList<Bullet> bullets = new ArrayList<>(); //bullets box
-//    ArrayList<Tank> tanks =  new ArrayList<>(); //enemies
-//    ArrayList<Explode> explodes =  new ArrayList<>(); //explodes
-    ArrayList<GameObject>  objects = new ArrayList<>();
-    ColliderChain chain = new ColliderChain(); //责任链
+    private static final GameModel INSTANCE = new GameModel();
+    Tank mytank;
+    ArrayList<GameObject> objects = new ArrayList<>();
 
-    public GameModel() {
+    ColliderChain chain = new ColliderChain(); //责任链
+    static {
+        //因为是单例，所以没有构造函数可以使用，只能用静态代码块
+        INSTANCE.init();
+    }
+
+    private GameModel() {
+    }
+
+    public static GameModel getInstance() {
+        return INSTANCE;
+    }
+
+    private void init() {
+        //初始化主战坦克
+        mytank = new Tank(200, 300, Dir.DOWN, Group.GOOD, this);
         int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
 
         // 初始化敌方坦克
@@ -20,34 +31,40 @@ public class GameModel {
             add(new Tank(50 + i * 80, 200, Dir.DOWN, Group.BAD, this));
         }
 
+        // 初始化墙
+        add(new Wall(150, 150, 200, 50));
+        add(new Wall(550, 150, 200, 50));
+        add(new Wall(300, 300, 50, 200));
+        add(new Wall(550, 300, 50, 200));
     }
 
-    public void add(GameObject go){
+
+    public void add(GameObject go) {
         objects.add(go);
     }
 
-    public void remove(GameObject go){
+    public void remove(GameObject go) {
         objects.remove(go);
     }
 
     public void paint(Graphics g) {
         //paint my good tank
-        tank.paint(g);
+        mytank.paint(g);
 
-       //paint other GameObjects
+        //paint other GameObjects
         for (int i = 0; i < objects.size(); i++) {
             objects.get(i).paint(g);
         }
 
         // Collide
         for (int i = 0; i < objects.size(); i++) {
-            for (int j = i+1; j <objects.size() ; j++) {
+            for (int j = i + 1; j < objects.size(); j++) {
                 chain.collide(objects.get(i), objects.get(j));
             }
         }
     }
 
     public Tank getMainTank() {
-        return tank;
+        return mytank;
     }
 }

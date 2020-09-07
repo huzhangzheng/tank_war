@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class TankFrame extends Frame {
-    private GameModel gm = new GameModel();
+    private GameModel gm =  GameModel.getInstance();
 
 
 

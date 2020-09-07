@@ -8,7 +8,10 @@ public class TankTankCollider implements Collider {
             Tank t2 = (Tank) o2;
 
             if (t1.getRec().intersects(t2.getRec())) {
-                t1.stop(); //这里没有直接return false,而是stop(); 最后还是会return true;
+// 这里没有直接return false,而是stop(); 最后还是会return true;
+                t1.back(); //相撞以后，回到上一个坐标点
+                t2.back(); //相撞以后，回到上一个坐标点
+//                t1.stop();
             }
         }
 

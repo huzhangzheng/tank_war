@@ -12,6 +12,7 @@ import java.util.Random;
  */
 public class Tank extends GameObject{
     public int x, y;//coordinate of tank
+    public int oldX, oldY;//old coordinate of tank
     public Dir dir = Dir.DOWN;//diretion of tan
     public GameModel gm; //tank canvas（war field）
     private static final int SPEED = 2; //speed of tank
@@ -117,6 +118,10 @@ public class Tank extends GameObject{
     }
 
     private void move() {
+        //record old location
+        oldX = x;
+        oldY = y;
+
         if (!this.moving) return;
         //change speed based on Direction
         switch (dir) {
@@ -169,5 +174,10 @@ public class Tank extends GameObject{
 
     public void stop() {
         moving = false;
+    }
+
+    public void back() {
+        x = oldX;
+        y = oldY;
     }
 }
