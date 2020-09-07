@@ -1,4 +1,5 @@
 import com.kevin.ResourceMgr;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.junit.Assert;
 import org.junit.Test;
 import javax.imageio.ImageIO;
@@ -6,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -27,6 +29,20 @@ public class ImageTest {
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void test2() {
+        ArrayList<Integer> objects = new ArrayList<>();
+        objects.add(0);
+        objects.add(1);
+        objects.add(2);
+        objects.add(3);
+        for (int i = 0; i < objects.size(); i++) {
+            for (int j = i+1; j <objects.size() ; j++) {
+                System.out.println(i+"-->"+j);
+            }
+        }
     }
 
 }

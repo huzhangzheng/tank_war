@@ -10,6 +10,7 @@ public class GameModel {
 //    ArrayList<Tank> tanks =  new ArrayList<>(); //enemies
 //    ArrayList<Explode> explodes =  new ArrayList<>(); //explodes
     ArrayList<GameObject>  objects = new ArrayList<>();
+    ColliderChain chain = new ColliderChain(); //责任链
 
     public GameModel() {
         int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
@@ -30,8 +31,6 @@ public class GameModel {
     }
 
     public void paint(Graphics g) {
-
-
         //paint my good tank
         tank.paint(g);
 
@@ -40,7 +39,12 @@ public class GameModel {
             objects.get(i).paint(g);
         }
 
-        //..to do Collide
+        // Collide
+        for (int i = 0; i < objects.size(); i++) {
+            for (int j = i+1; j <objects.size() ; j++) {
+                chain.collide(objects.get(i), objects.get(j));
+            }
+        }
     }
 
     public Tank getMainTank() {

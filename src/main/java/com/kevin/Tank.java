@@ -23,7 +23,9 @@ public class Tank extends GameObject{
     public boolean living = true;
     public Group group = Group.BAD;
     private Random random = new Random();
-    public Rectangle rec = new Rectangle();
+
+
+    private Rectangle rec = new Rectangle();
     private BaseStrategy fireStrategy;
 
 
@@ -78,6 +80,10 @@ public class Tank extends GameObject{
     //set moving status
     public void setMoving(Boolean moving) {
         this.moving = moving;
+    }
+
+    public Rectangle getRec() {
+        return rec;
     }
 
     //重画坦克
@@ -159,5 +165,9 @@ public class Tank extends GameObject{
 
     public void die() {
         this.living = false;
+    }
+
+    public void stop() {
+        moving = false;
     }
 }

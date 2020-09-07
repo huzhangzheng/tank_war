@@ -97,7 +97,7 @@ public class Bullet extends GameObject {
         if(this.group == tank.group) return;
 
 
-        if (rec.intersects(tank.rec)) {
+        if (rec.intersects(tank.getRec())) {
             this.die();
             tank.die();
             int ex = tank.getX()+ tank.WIDTH/2 - this.WIDTH/2;
@@ -108,6 +108,10 @@ public class Bullet extends GameObject {
 
     public void die() {
         this.living=false;
+    }
+
+    public Rectangle getRec() {
+        return rec;
     }
 
 }
