@@ -6,18 +6,16 @@ public class Bullet extends GameObject {
     private final static int SPEED=5; //the speed of bullet
     public final static int WIDTH= ResourceMgr.INSTANCE.getBulletU().getWidth(); // width of bullet
     public final static int HEIGHT= ResourceMgr.INSTANCE.getBulletU().getHeight();//height of the bullet
-    private int x,y; // the coordinate of the bullet
+//    private int x,y; // the coordinate of the bullet
     private Dir dir;
     private boolean living =true;
-    GameModel gm = null;
     private Group group = Group.BAD;
     private Rectangle rec = new Rectangle();
 
-    public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
+    public Bullet(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gm = gm;
         this.group = group;
 
         rec.x = this.x;
@@ -26,7 +24,7 @@ public class Bullet extends GameObject {
         rec.height = HEIGHT;
 
         //after bullet was created , add this bullet into  the  clip
-        gm.add(this);
+        GameModel.getInstance().add(this);
     }
 
 
@@ -41,7 +39,7 @@ public class Bullet extends GameObject {
 
     public void paint(Graphics g) {
         if(!this.living) {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
         }
 //        Color originColor = g.getColor();
 //        g.setColor(Color.RED);
@@ -70,6 +68,16 @@ public class Bullet extends GameObject {
         rec.x = this.x;
         rec.y = this.y;
 
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     private void move() {
@@ -102,7 +110,7 @@ public class Bullet extends GameObject {
             tank.die();
             int ex = tank.getX()+ tank.WIDTH/2 - this.WIDTH/2;
             int ey = tank.getY()+ tank.HEIGHT/2 - this.HEIGHT/2;
-            gm.add(new Explode(ex,ey,gm));
+            GameModel.getInstance().add(new Explode(ex,ey));
         }
     }
 

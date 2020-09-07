@@ -11,10 +11,9 @@ import java.util.Random;
  * 设置坦克方向-》然后重画坦克
  */
 public class Tank extends GameObject{
-    public int x, y;//coordinate of tank
+//    public int x, y;//coordinate of tank
     public int oldX, oldY;//old coordinate of tank
     public Dir dir = Dir.DOWN;//diretion of tan
-    public GameModel gm; //tank canvas（war field）
     private static final int SPEED = 2; //speed of tank
 
 
@@ -30,11 +29,10 @@ public class Tank extends GameObject{
     private BaseStrategy fireStrategy;
 
 
-    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
+    public Tank(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gm = gm;
         this.group = group;
 
         rec.x = x;
@@ -95,7 +93,7 @@ public class Tank extends GameObject{
 //        g.setColor(c);
 
         //whether the tank is alive
-        if (!this.living) gm.remove(this);
+        if (!this.living) GameModel.getInstance().remove(this);
 
         // repaint the tank
         switch (this.dir) {
@@ -115,6 +113,16 @@ public class Tank extends GameObject{
         }
         //start to move
         move();
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     private void move() {

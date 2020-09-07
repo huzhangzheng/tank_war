@@ -23,12 +23,12 @@ public class GameModel {
 
     private void init() {
         //初始化主战坦克
-        mytank = new Tank(200, 300, Dir.DOWN, Group.GOOD, this);
+        mytank = new Tank(200, 300, Dir.DOWN, Group.GOOD);
         int initTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
 
         // 初始化敌方坦克
         for (int i = 0; i < initTankCount; i++) {
-            add(new Tank(50 + i * 80, 200, Dir.DOWN, Group.BAD, this));
+            add(new Tank(50 + i * 80, 200, Dir.DOWN, Group.BAD));
         }
 
         // 初始化墙
